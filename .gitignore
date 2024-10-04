@@ -1,0 +1,7 @@
+# Ignore Firebase credentials
+canaryipcollect-firebase-adminsdk-xdipe-74bce1e107.json
+
+# Ignore other sensitive files or directories
+*.env
+node_modules/
+__pycache__/
