@@ -1,3 +1,5 @@
+import os
+import json
 from flask import Flask
 import imaplib
 import email
@@ -15,7 +17,14 @@ def update_firestore_with_email_data():
     IMAP_SERVER = "imap.gmail.com"
 
     # Firebase credentials and initialization
-    cred = credentials.Certificate("GOOGLE_APPLICATION_CREDENTIALS") #canaryipcollect-firebase-adminsdk-xdipe-74bce1e107.json
+    # Retrieve JSON content from environment variable
+    firebase_credentials_json = os.getenv('GOOGLE_APPLICATION_CREDENTIALS_JSON')
+
+    # Parse the JSON string
+    firebase_credentials_dict = json.loads(firebase_credentials_json)
+
+    # Initialize Firebase using the parsed dictionary
+    cred = credentials.Certificate(firebase_credentials_dict) #canaryipcollect-firebase-adminsdk-xdipe-74bce1e107.json
     firebase_admin.initialize_app(cred)
     db = firestore.client()
 
