@@ -6,9 +6,28 @@ import email
 import re
 import firebase_admin
 from firebase_admin import credentials, firestore
+from dotenv import load_dotenv, dotenv_values 
 
-
+load_dotenv()
 app = Flask(__name__)
+
+def create_firebase_credentials():
+    # Load Firebase credentials from environment variables
+    firebase_credentials = {
+        "type": os.getenv("type"),  # Corresponds to the key in your JSON
+        "project_id": os.getenv("project_id"),
+        "private_key_id": os.getenv("private_key_id"),
+        "private_key": os.getenv("private_key").replace('\\n', '\n'),  # Ensure newlines are properly formatted
+        "client_email": os.getenv("client_email"),
+        "client_id": os.getenv("client_id"),
+        "auth_uri": os.getenv("auth_uri"),
+        "token_uri": os.getenv("token_uri"),
+        "auth_provider_x509_cert_url": os.getenv("auth_provider_x509_cert_url"),
+        "client_x509_cert_url": os.getenv("client_x509_cert_url"),
+    }
+
+    return firebase_credentials
+
 
 def update_firestore_with_email_data():
 # Email credentials and server details
@@ -17,13 +36,9 @@ def update_firestore_with_email_data():
     IMAP_SERVER = "imap.gmail.com"
 
     # Firebase credentials and initialization
-    # Retrieve JSON content from environment variable
-    firebase_credentials_json = os.getenv('GOOGLE_APPLICATION_CREDENTIALS_JSON')
+    firebase_credentials_dict = create_firebase_credentials()
 
-    # Parse the JSON string
-    firebase_credentials_dict = json.loads(firebase_credentials_json)
-
-    # Initialize Firebase using the parsed dictionary
+    # Initialize Firebase using the constructed dictionary
     cred = credentials.Certificate(firebase_credentials_dict) #canaryipcollect-firebase-adminsdk-xdipe-74bce1e107.json
     firebase_admin.initialize_app(cred)
     db = firestore.client()
