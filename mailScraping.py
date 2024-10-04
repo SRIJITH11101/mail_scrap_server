@@ -15,7 +15,7 @@ def update_firestore_with_email_data():
     IMAP_SERVER = "imap.gmail.com"
 
     # Firebase credentials and initialization
-    cred = credentials.Certificate("canaryipcollect-firebase-adminsdk-xdipe-74bce1e107.json") #canaryipcollect-firebase-adminsdk-xdipe-74bce1e107.json
+    cred = credentials.Certificate("GOOGLE_APPLICATION_CREDENTIALS") #canaryipcollect-firebase-adminsdk-xdipe-74bce1e107.json
     firebase_admin.initialize_app(cred)
     db = firestore.client()
 
