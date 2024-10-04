@@ -22,7 +22,7 @@ def create_firebase_credentials():
         "token_uri": os.getenv("token_uri"),
         "auth_provider_x509_cert_url": os.getenv("auth_provider_x509_cert_url"),
         "client_x509_cert_url": os.getenv("client_x509_cert_url"),
-        "universal_domain" : os.getenv("universal_domain"),
+        "universe_domain" : os.getenv("universe_domain"),
     }
     for key, value in firebase_credentials.items():
         if value is None:
@@ -103,4 +103,4 @@ def run_script():
     return "Data updated successfully", 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+    app.run(debug=True, port=os.getenv("PORT", default=5000))
