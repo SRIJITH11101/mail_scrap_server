@@ -15,15 +15,20 @@ def create_firebase_credentials():
         "type": os.getenv("type"),  # Corresponds to the key in your JSON
         "project_id": os.getenv("project_id"),
         "private_key_id": os.getenv("private_key_id"),
-        "private_key": os.getenv("private_key").replace('\\n', '\n'),  # Ensure newlines are properly formatted
+        "private_key": os.getenv("private_key"),  # Ensure newlines are properly formatted
         "client_email": os.getenv("client_email"),
         "client_id": os.getenv("client_id"),
         "auth_uri": os.getenv("auth_uri"),
         "token_uri": os.getenv("token_uri"),
         "auth_provider_x509_cert_url": os.getenv("auth_provider_x509_cert_url"),
         "client_x509_cert_url": os.getenv("client_x509_cert_url"),
+        "universal_domain" : os.getenv("universal_domain"),
     }
-
+    for key, value in firebase_credentials.items():
+        if value is None:
+            print(f"Warning: Environment variable '{key}' is not set.")
+    
+    firebase_credentials["private_key"] = firebase_credentials["private_key"].replace('\\n', '\n') if firebase_credentials["private_key"] else None
     return firebase_credentials
 
 
@@ -35,7 +40,7 @@ def update_firestore_with_email_data():
 
     # Firebase credentials and initialization
     firebase_credentials_dict = create_firebase_credentials()
-
+    print(firebase_credentials_dict)
     # Initialize Firebase using the constructed dictionary
     cred = credentials.Certificate(firebase_credentials_dict) #canaryipcollect-firebase-adminsdk-xdipe-74bce1e107.json
     firebase_admin.initialize_app(cred)
