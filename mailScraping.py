@@ -6,9 +6,7 @@ import email
 import re
 import firebase_admin
 from firebase_admin import credentials, firestore
-from dotenv import load_dotenv, dotenv_values 
 
-load_dotenv()
 app = Flask(__name__)
 
 def create_firebase_credentials():
