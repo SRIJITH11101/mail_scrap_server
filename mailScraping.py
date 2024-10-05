@@ -6,8 +6,12 @@ import email
 import re
 import firebase_admin
 from firebase_admin import credentials, firestore
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+
+CORS(app)
 
 def create_firebase_credentials():
     # Load Firebase credentials from environment variables
