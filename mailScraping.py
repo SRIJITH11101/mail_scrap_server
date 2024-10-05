@@ -40,10 +40,11 @@ def update_firestore_with_email_data():
 
     # Firebase credentials and initialization
     firebase_credentials_dict = create_firebase_credentials()
-    print(firebase_credentials_dict)
+    #print(firebase_credentials_dict)
     # Initialize Firebase using the constructed dictionary
-    cred = credentials.Certificate(firebase_credentials_dict) #canaryipcollect-firebase-adminsdk-xdipe-74bce1e107.json
-    firebase_admin.initialize_app(cred)
+    if not firebase_admin._apps:
+        cred = credentials.Certificate(firebase_credentials_dict)
+        firebase_admin.initialize_app(cred)
     db = firestore.client()
 
     # Connect to the IMAP server and select the mailbox
